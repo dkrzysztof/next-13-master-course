@@ -32,6 +32,16 @@ const products: ProductItemType[] = [
       src: "/product_1.jpg"
     }
   },
+	{
+    id: "4",
+    name: "Koszulka",
+    category: "T-shirt",
+    price: 99,
+    coverImage:{
+      alt: "koszulka",
+      src: "/product_1.jpg"
+    }
+  },
 ];
 
 export default function Products() {
