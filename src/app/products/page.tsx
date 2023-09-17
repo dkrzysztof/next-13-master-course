@@ -1,15 +1,43 @@
-// create a random list of four elements that are strings
-const randomList = Array.from({ length: 4 }, () => Math.floor(Math.random() * 100));
+import { ProductList } from "@/ui/organisms/ProductList";
+import { ProductItemType } from "@/ui/types";
 
-export default function Home() {
-	return (
-		<main className='flex min-h-screen flex-col items-center justify-between p-24'>
-			<ul data-testid="products-list">
-				{randomList.map((item, index) => (
-					<li key={index}>{item}</li>
-				))}
-			</ul>
-		</main>
-	);
+const products: ProductItemType[] = [
+  {
+    id: "1",
+    name: "Koszulka",
+    category: "T-shirt",
+    price: 99,
+    coverImage:{
+      alt: "koszulka",
+      src: "/product_1.jpg"
+    }
+  },
+	{
+    id: "2",
+    name: "Koszulka",
+    category: "T-shirt",
+    price: 99,
+    coverImage:{
+      alt: "koszulka",
+      src: "/product_1.jpg"
+    }
+  },
+	{
+    id: "3",
+    name: "Koszulka",
+    category: "T-shirt",
+    price: 99,
+    coverImage:{
+      alt: "koszulka",
+      src: "/product_1.jpg"
+    }
+  },
+];
+
+export default function Products() {
+  return (
+    <section className="mx-auto max-w-2xl px-8 py-12 sm:px-6 sm:py-16 md:max-w-4xl lg:max-w-7xl">
+      <ProductList products={products} />
+    </section>
+  );
 }
- 
