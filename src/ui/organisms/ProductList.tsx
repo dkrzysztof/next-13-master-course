@@ -1,4 +1,4 @@
-import { ProductListItem } from "../moleculs/ProductListItem";
+import { ProductListItem } from "../molecules/ProductListItem";
 import { ProductItemType } from "../types";
 
 export type ProductListProps = {
