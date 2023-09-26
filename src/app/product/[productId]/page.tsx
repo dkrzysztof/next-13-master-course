@@ -1,12 +1,29 @@
-import { getProductById } from "@/api/products";
+import { getProductById, getProductsList } from "@/api/products";
 import { ProductCoverImage } from "@/ui/atoms/ProductCoverImage";
+import ProductDescription from "@/ui/atoms/ProductDescription";
 import { ProductListItemDescription } from "@/ui/atoms/ProductListItemDescription";
-import { ProductListItem } from "@/ui/molecules/ProductListItem";
 import { SuggestedProductsList } from "@/ui/organisms/SuggestedProductsList";
+import { formatMoney } from "@/utils";
 import { Suspense } from "react";
 
 type SingleProductPageProps = {
   params: { productId: string };
+};
+
+export const generateStaticProps = async () => {
+  const products = await getProductsList();
+  return products.map(({ id }) => ({ productId: id }));
+};
+
+export const generateMetadata = async ({
+  params: { productId },
+}: SingleProductPageProps) => {
+  const product = await getProductById(productId);
+  return {
+    title: `${product.name} - Sklep internetowy`,
+    description: product.description,
+    image: product.coverImage.src,
+  };
 };
 
 export default async function SingleProductPage({
@@ -15,12 +32,16 @@ export default async function SingleProductPage({
   const product = await getProductById(productId);
   return (
     <>
-      <h1>{product.name}</h1>
-      <article className="max-w-xs">
-        <ProductCoverImage {...product.coverImage} />
-        <ProductListItemDescription product={product} />
+      <article className="flex flex-row justify-around gap-6">
+        <div className="max-w-sm">
+          <ProductDescription product={product} />
+        </div>
+        <div className="max-w-md">
+          <ProductCoverImage {...product.coverImage} />
+        </div>
       </article>
-      <aside>
+      <aside className="mt-12">
+        <h3 className="text-slate-900">Mogą ci się spodobać:</h3>
         <Suspense fallback="Ładowanie...">
           <SuggestedProductsList />
         </Suspense>

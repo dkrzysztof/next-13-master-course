@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className={inter.className}>
         {/* <Navbar/> */}
         <Navbar />
-        <section className="mx-auto max-w-2xl px-8 py-12 sm:px-6 sm:py-16 md:max-w-4xl lg:max-w-7xl">
+        <section className="mx-auto max-w-2xl px-8 sm:px-6 sm:py-4 md:max-w-4xl lg:max-w-7xl">
           {children}
         </section>
         <footer className="bg-slate-900 text-white"></footer>
