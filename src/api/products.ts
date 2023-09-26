@@ -1,4 +1,4 @@
-import { ProductItemType, ProductResponseItem } from "@/ui/types";
+import type { ProductItemType, ProductResponseItem } from "@/ui/types";
 
 export const getProductsList = async (
   cursor = 1

@@ -1,8 +1,8 @@
+import type { Route } from "next";
 import { getProductsList } from "@/api/products";
 import { PaginationList } from "@/ui/molecules/PaginationList";
 import { ProductList } from "@/ui/organisms/ProductList";
 import { getPages } from "@/utils";
-import { Route } from "next";
 
 type ProductsCursorPageProps = {
   params: {
@@ -11,9 +11,7 @@ type ProductsCursorPageProps = {
   };
 };
 
-export const generateStaticParams = async ({
-  params,
-}: ProductsCursorPageProps) => {
+export const generateStaticParams = async () => {
   return getPages(20, 100).map((cursor) => {
     cursor;
   });

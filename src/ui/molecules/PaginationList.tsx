@@ -1,9 +1,7 @@
 "use client";
-import { getPages } from "@/utils";
-import { PaginationItem } from "../atoms/PaginationItem";
-import { redirect, useRouter } from "next/navigation";
+import type { Route } from "next";
 import { ActiveLink } from "../atoms/ActiveLink";
-import { Route } from "next";
+import { getPages } from "@/utils";
 
 type PaginationListProps = {
   rootPath: Route;

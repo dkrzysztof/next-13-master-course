@@ -1,10 +1,8 @@
+import { Suspense } from "react";
 import { getProductById, getProductsList } from "@/api/products";
 import { ProductCoverImage } from "@/ui/atoms/ProductCoverImage";
 import ProductDescription from "@/ui/atoms/ProductDescription";
-import { ProductListItemDescription } from "@/ui/atoms/ProductListItemDescription";
 import { SuggestedProductsList } from "@/ui/organisms/SuggestedProductsList";
-import { formatMoney } from "@/utils";
-import { Suspense } from "react";
 
 type SingleProductPageProps = {
   params: { productId: string };

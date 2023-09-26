@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ProductCoverImage } from "../atoms/ProductCoverImage";
 import { ProductListItemDescription } from "../atoms/ProductListItemDescription";
-import { ProductItemType } from "../types";
+import type { ProductItemType } from "../types";
 
 type ProductListItemProps = {
   product: ProductItemType;

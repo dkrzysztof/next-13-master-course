@@ -1,12 +1,12 @@
-import { formatMoney } from "@/utils";
 import React from "react";
-import { ProductItemType } from "../types";
+import type { ProductItemType } from "../types";
+import { formatMoney } from "@/utils";
 
 type ProductDescriptionProps = {
   product: ProductItemType;
 };
 
-const ProductDescription = ({
+export const ProductDescription = ({
   product: { name, category, description, price },
 }: ProductDescriptionProps) => {
   return (
@@ -24,4 +24,3 @@ const ProductDescription = ({
   );
 };
 
-export default ProductDescription;

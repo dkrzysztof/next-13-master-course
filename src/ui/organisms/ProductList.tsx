@@ -1,5 +1,5 @@
 import { ProductListItem } from "../molecules/ProductListItem";
-import { ProductItemType } from "../types";
+import type { ProductItemType } from "../types";
 
 export type ProductListProps = {
   products: ProductItemType[];
