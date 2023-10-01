@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { getProductById, getProductsList } from "@/api/products";
-import { ProductCoverImage } from "@/ui/atoms/ProductCoverImage";
-import ProductDescription from "@/ui/atoms/ProductDescription";
+import { ProductImage } from "@/ui/atoms/ProductImage";
+import { ProductDescription } from "@/ui/atoms/ProductDescription";
 import { SuggestedProductsList } from "@/ui/organisms/SuggestedProductsList";
 
 type SingleProductPageProps = {
@@ -35,7 +35,7 @@ export default async function SingleProductPage({
           <ProductDescription product={product} />
         </div>
         <div className="max-w-md">
-          <ProductCoverImage {...product.coverImage} />
+          <ProductImage {...product.coverImage} />
         </div>
       </article>
       <aside className="mt-12">
