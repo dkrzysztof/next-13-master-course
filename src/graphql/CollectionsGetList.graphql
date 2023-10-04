@@ -1,0 +1,11 @@
+query CollectionsGetList {
+  collections(first: 10) {
+    id
+    name
+    description
+    updatedAt
+    image {
+      url
+    }
+  }
+}

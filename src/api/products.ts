@@ -1,37 +1,84 @@
-import type { ProductItemType, ProductResponseItem } from "@/ui/types";
+import { notFound } from "next/navigation";
+import { executeQraphql } from ".";
+import {
+  ProductGetByIdDocument,
+  ProductsGetByCategorySlugDocument,
+  ProductsGetListDocument,
+} from "@/gql/graphql";
+import type { ProductItemType } from "@/ui/types";
 
-export const getProductsList = async (
-  cursor = 1
-): Promise<ProductItemType[]> => {
-  const res = await fetch(
-    `https://naszsklep-api.vercel.app/api/products?take=${cursor * 20}`
+export const getProductsList = async (): Promise<
+  ProductItemType[]
+> => {
+  const graphqlResponse = await executeQraphql(
+    ProductsGetListDocument,
+    {}
   );
 
-  const productsReponse = (await res.json()) as ProductResponseItem[];
-
-  return productsReponse.map(productResponseToProductItemType);
+  return graphqlResponse.products.map((p) => ({
+    id: p.id,
+    name: p.name,
+    category: p.categories[0]?.name || "",
+    coverImage: p.images[0] && {
+      src: p.images[0].url,
+      alt: p.name,
+    },
+    price: p.price,
+    description: p.description,
+  }));
 };
 
 export const getProductById = async (
   id: ProductItemType["id"]
 ): Promise<ProductItemType> => {
-  const res = await fetch(
-    `https://naszsklep-api.vercel.app/api/products/${id}`
+  const { product } = await executeQraphql(
+    ProductGetByIdDocument,
+    {
+      id,
+    }
   );
-  const productResponse = (await res.json()) as ProductResponseItem;
-  return productResponseToProductItemType(productResponse);
+
+  if (!product) {
+    notFound();
+  }
+
+  return {
+    id: product.id,
+    name: product.name,
+    category: product.categories[0]?.name || "",
+    categorySlug: product.categories[0]?.slug || "",
+    coverImage: product.images[0] && {
+      src: product.images[0].url,
+      alt: product.name,
+    },
+    price: product.price,
+    description: product.description,
+  };
 };
 
-const productResponseToProductItemType = (
-  product: ProductResponseItem
-): ProductItemType => ({
-  id: product.id,
-  name: product.title,
-  category: product.category,
-  coverImage: {
-    src: product.image,
-    alt: product.title,
-  },
-  price: product.price,
-  description: product.description,
-});
+export const getProductsByCategory = async (
+  slug: string
+): Promise<ProductItemType[]> => {
+  const {
+    categories: [categoryProducts],
+  } = await executeQraphql(
+    ProductsGetByCategorySlugDocument,
+    { slug }
+  );
+
+  if (!categoryProducts) {
+    notFound();
+  }
+
+  return categoryProducts.products.map((p) => ({
+    id: p.id,
+    name: p.name,
+    category: p.categories[0]?.name || "",
+    coverImage: p.images[0] && {
+      src: p.images[0].url,
+      alt: p.name,
+    },
+    price: p.price,
+    description: p.description,
+  }));
+};

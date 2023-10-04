@@ -1,0 +1,7 @@
+query CategoriesList {
+  categories{
+    id
+    name
+    slug
+  }
+}

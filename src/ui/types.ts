@@ -16,10 +16,27 @@ export type ProductItemType = {
   id: string;
   name: string;
   category: string;
+  categorySlug: string;
   description: string;
   price: number;
-  coverImage: {
+  coverImage?: {
     src: string;
     alt: string;
+  };
+};
+
+export type CategoryItemType = {
+  id: string;
+  name: string;
+  slug: string;
+};
+
+export type CollectionItemType = {
+  id: string;
+  description?: string | null;
+  name: string;
+  updatedAt: unknown;
+  image: {
+    url: string;
   };
 };

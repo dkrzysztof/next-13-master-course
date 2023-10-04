@@ -1,11 +1,23 @@
 import { ProductList } from "./ProductList";
-import { getProductsList } from "@/api/products";
+import { getProductsByCategory } from "@/api/products";
 
 const sleepForTime = (time: number) =>
   new Promise((resolve) => setTimeout(resolve, time));
 
-export const SuggestedProductsList = async () => {
-  const products = await getProductsList();
+type SuggestedProductsListProps = {
+  categorySlug: string;
+};
+
+export const SuggestedProductsList = async ({
+  categorySlug,
+}: SuggestedProductsListProps) => {
+  const products = await getProductsByCategory(
+    categorySlug
+  );
   await sleepForTime(5000);
-  return <ProductList products={products.slice(0,4)} />;
+  return (
+    <div data-testid="related-products">
+      <ProductList products={products.slice(0, 4)} />;
+    </div>
+  );
 };
