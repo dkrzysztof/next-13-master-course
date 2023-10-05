@@ -1,5 +1,5 @@
-import { ProductListFragmentFragment } from "./gql/graphql";
-import { ProductItemType } from "./ui/types";
+import type { ProductListFragmentFragment } from "./gql/graphql";
+import type { ProductItemType } from "./ui/types";
 
 export const formatMoney = (amount: number) => {
   return new Intl.NumberFormat("pl-PL", {

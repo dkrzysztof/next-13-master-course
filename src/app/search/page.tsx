@@ -21,12 +21,18 @@ export default async function SearchPage({
   return (
     <section className="mx-auto max-w-2xl px-8 py-4 sm:px-6 sm:py-4 md:max-w-4xl lg:max-w-7xl">
       <SearchParamHeader searchParams={query} />
-      {isEmpty ? <>Nothing was found :(</> :<><ProductList products={products} />
-      <PaginationList
-        rootPath={`/products` as Route}
-        pageSize={PAGE_SIZE}
-        totalItems={count}
-      /></>}
+      {isEmpty ? (
+        <>Nothing was found :(</>
+      ) : (
+        <>
+          <ProductList products={products} />
+          <PaginationList
+            rootPath={`/products` as Route}
+            pageSize={PAGE_SIZE}
+            totalItems={count}
+          />
+        </>
+      )}
     </section>
   );
 }
