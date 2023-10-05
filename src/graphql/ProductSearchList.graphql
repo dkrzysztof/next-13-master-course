@@ -1,0 +1,10 @@
+query ProductSearchList($search: String!) {
+  products(where:{name_contains: $search}) {
+    ...ProductListFragment
+  }
+  productsConnection(where: {name_contains: $search}) {
+    aggregate {
+      count
+    }
+  }
+}

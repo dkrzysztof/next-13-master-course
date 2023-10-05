@@ -5,10 +5,16 @@ import { getPages } from "@/utils";
 
 type PaginationListProps = {
   rootPath: Route;
+  pageSize: number;
+  totalItems: number;
 };
 
-export const PaginationList = ({ rootPath }: PaginationListProps) => {
-  const availablePages = getPages(20, 100);
+export const PaginationList = ({
+  rootPath,
+  pageSize,
+  totalItems,
+}: PaginationListProps) => {
+  const availablePages = getPages(pageSize, totalItems);
 
   return (
     <nav

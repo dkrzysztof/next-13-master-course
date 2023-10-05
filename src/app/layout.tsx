@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} text-slate-800`}>
         {/* <Navbar/> */}
         <Navbar />
         <section className="mx-auto max-w-2xl px-8 sm:px-6 sm:py-4 md:max-w-4xl lg:max-w-7xl">

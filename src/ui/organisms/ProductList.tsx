@@ -2,7 +2,7 @@ import { ProductListItem } from "../molecules/ProductListItem";
 import type { ProductItemType } from "../types";
 
 export type ProductListProps = {
-  products: ProductItemType[];
+  products: Omit<ProductItemType,"categorySlug">[];
 };
 
 export const ProductList = ({ products }: ProductListProps) => {

@@ -1,3 +1,8 @@
+export type ListPagination<T> = {
+  data: T[];
+  count: number;
+};
+
 export type ProductResponseItem = {
   id: string;
   title: string;
@@ -40,3 +45,31 @@ export type CollectionItemType = {
     url: string;
   };
 };
+
+export type ProductVariant =
+  | ProductColorVariant
+  | ProductSizeColorVariant
+  | ProductSizeVariant;
+
+export interface ProductBaseVariant {
+  id: string;
+  name: string;
+  __typename: string;
+}
+
+export interface ProductColorVariant
+  extends ProductBaseVariant {
+  __typename: "ProductColorVariant";
+  color: string;
+}
+export interface ProductSizeColorVariant
+  extends ProductBaseVariant {
+  __typename: "ProductSizeColorVariant";
+  color: string;
+  size: string;
+}
+export interface ProductSizeVariant
+  extends ProductBaseVariant {
+  __typename: "ProductSizeVariant";
+  size: string;
+}

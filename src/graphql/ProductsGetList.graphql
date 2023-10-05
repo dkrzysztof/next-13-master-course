@@ -1,16 +1,11 @@
-query ProductsGetList {
-  products(first: 10){
-    id
-    name
-    description
-    categories{
-      id
-      name
-    }
-    images(first: 1) {
-      url
-    }
-    price
+query ProductsGetList($first: Int!, $skip: Int!) {
+  products(first: $first, skip: $skip){
+    ...ProductListFragment
+  }
 
+  productsConnection {
+    aggregate {
+      count
+    }
   }
 }

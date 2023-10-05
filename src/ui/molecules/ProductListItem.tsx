@@ -4,7 +4,7 @@ import { ProductListItemDescription } from "../atoms/ProductListItemDescription"
 import type { ProductItemType } from "../types";
 
 type ProductListItemProps = {
-  product: ProductItemType;
+  product: Omit<ProductItemType, "categorySlug">;
 };
 
 export const ProductListItem = ({

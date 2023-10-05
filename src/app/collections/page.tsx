@@ -1,3 +1,4 @@
+import NextImage from "next/image";
 import { getCollectionsList } from "@/api/collections";
 
 export default async function CollectionsPage() {
@@ -10,7 +11,7 @@ export default async function CollectionsPage() {
           <h2>{collection.name}</h2>
           <p>{collection.description}</p>
           <div>
-            <img width={520} src={collection.image.url}/>
+            <NextImage height={400} width={520} src={collection.image.url} alt={collection.name}/>
             </div>
         </div>
       ))}

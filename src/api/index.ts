@@ -34,3 +34,11 @@ export const executeQraphql = async <TResult, TVariables>(
 
   return graphqlResponse.data;
 };
+
+export const paginationToFirstSkip = (
+  pageNumber: number,
+  pageSize: number
+) => ({
+  first: pageSize,
+  skip: pageSize * (pageNumber - 1),
+});

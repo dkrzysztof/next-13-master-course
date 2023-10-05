@@ -11,13 +11,15 @@ type SuggestedProductsListProps = {
 export const SuggestedProductsList = async ({
   categorySlug,
 }: SuggestedProductsListProps) => {
-  const products = await getProductsByCategory(
+  const { data: products } = await getProductsByCategory(
+    1,
+    4,
     categorySlug
   );
   await sleepForTime(5000);
   return (
     <div data-testid="related-products">
-      <ProductList products={products.slice(0, 4)} />;
+      <ProductList products={products} />;
     </div>
   );
 };

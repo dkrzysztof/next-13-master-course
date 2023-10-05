@@ -1,24 +1,16 @@
 import { Suspense } from "react";
 import {
-  getProductById,
+  getProductById, getProductVariants,
 } from "@/api/products";
 import { ProductImage } from "@/ui/atoms/ProductImage";
 import { ProductDescription } from "@/ui/atoms/ProductDescription";
 import { SuggestedProductsList } from "@/ui/organisms/SuggestedProductsList";
-import { ProductsGetListDocument } from "@/gql/graphql";
-import { executeQraphql } from "@/api";
+import { ProductVariants } from "@/ui/molecules/ProductVariants";
 
 type SingleProductPageProps = {
   params: { productId: string };
 };
 
-export const generateStaticProps = async () => {
-  const { products } = await executeQraphql(
-    ProductsGetListDocument,
-    {}
-  );
-  return products.map(({ id }) => ({ productId: id }));
-};
 
 export const generateMetadata = async ({
   params: { productId },
@@ -35,14 +27,16 @@ export default async function SingleProductPage({
   params: { productId },
 }: SingleProductPageProps) {
   const product = await getProductById(productId);
+  const productVariants = await getProductVariants(productId);
 
   return (
-    <>
-      <article className="flex flex-row justify-around gap-6">
-        <div className="max-w-sm">
+    <section className="mx-auto max-w-2xl px-8 py-4 sm:px-6 sm:py-4 md:max-w-4xl lg:max-w-7xl">
+      <article className="flex flex-row justify-between gap-6">
+        <div className="float-left max-w-lg">
           <ProductDescription product={product} />
+          <ProductVariants variants={productVariants} />
         </div>
-        <div className="max-w-md">
+        <div className="float-right max-w-lg">
           {product.coverImage && (
             <ProductImage {...product.coverImage} />
           )}
@@ -56,6 +50,6 @@ export default async function SingleProductPage({
           <SuggestedProductsList categorySlug={product.categorySlug} />
         </Suspense>
       </aside>
-    </>
-  );
+    </section>
+  );  
 }
