@@ -10,6 +10,11 @@ const nextConfig = {
         destination: "/products/1",
         permanent: true,
       },
+      {
+        source: "/",
+        destination: "/products/1",
+        permanent: true,
+      },
     ];
   },
   images: {
