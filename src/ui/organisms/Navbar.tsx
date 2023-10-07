@@ -1,12 +1,15 @@
 import { ActiveLink } from "../atoms/ActiveLink";
 import { SearchProducts } from "../molecules/SearchProducts";
+import { CategoryNavbarItem } from "../molecules/CategoryNavbar";
+import { getCategoriesList } from "@/api/categories";
 
-export const Navbar = () => {
+export const Navbar = async () => {
+  const categories = await getCategoriesList();
+
   const activeLinkProps = {
     className:
-      "text-blue-600 border-blue-600 font-light hover:font-semibold hover:text-blue-600 py-3 px-4 -mb-px transition-colors transition-all",
-    activeClassName:
-      "border-b-2 font-semibold",
+      "text-blue-600 font-normal border-b-2 hover:border-blue-600 py-3 px-4 -mb-0.5 transition-colors transition-all",
+    activeClassName: "border-b-2 border-blue-600 hover:no-underline	font-semibold",
   };
 
   return (
@@ -18,15 +21,13 @@ export const Navbar = () => {
         <ActiveLink href="/products" {...activeLinkProps}>
           All
         </ActiveLink>
-        <ActiveLink href="/categories" {...activeLinkProps}>
-          Categories
-        </ActiveLink>
-        <ActiveLink
-          href="/collections"
-          {...activeLinkProps}
-        >
-          Collections
-        </ActiveLink>
+        {categories.slice(0, 3).map((category) => (
+          <CategoryNavbarItem
+            category={category}
+            key={category.id}
+            {...activeLinkProps}
+          />
+        ))}
         <SearchProducts className="ml-auto" />
       </div>
     </nav>

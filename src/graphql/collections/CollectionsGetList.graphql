@@ -3,7 +3,7 @@ query CollectionsGetList {
     id
     name
     description
-    updatedAt
+    slug
     image {
       url
     }

@@ -2,6 +2,9 @@ import type { Route } from "next";
 import { getProductsList } from "@/api/products";
 import { PaginationList } from "@/ui/molecules/PaginationList";
 import { ProductList } from "@/ui/organisms/ProductList";
+import { getCollectionsList } from "@/api/collections";
+import { CollectionList } from "@/ui/organisms/CollectionList";
+import { PageHeader } from "@/ui/atoms/PageHeader";
 
 const PAGE_SIZE = 8;
 
@@ -30,14 +33,23 @@ export default async function Products({
     pageNumber
   );
 
+  const collections = await getCollectionsList();
+
   return (
-    <section className="mx-auto max-w-2xl px-8 py-12 sm:px-6 sm:py-16 md:max-w-4xl lg:max-w-7xl">
-      <ProductList products={products} />
-      <PaginationList
-        rootPath={`/products` as Route}
-        pageSize={PAGE_SIZE}
-        totalItems={count}
-      />
-    </section>
+    <>
+      <section className="mx-auto max-w-2xl px-8 pt-12 pb-4 sm:px-6 sm:py-4 md:max-w-4xl lg:max-w-7xl">
+        <PageHeader title="Newest collections" name={""} />
+        <CollectionList collections={collections} />
+      </section>
+      <section className="mx-auto max-w-2xl px-8 pb-12 sm:px-6 sm:py-16 md:max-w-4xl lg:max-w-7xl">
+        <PageHeader title="Our products" name={""} />
+        <ProductList products={products} />
+        <PaginationList
+          rootPath={`/products` as Route}
+          pageSize={PAGE_SIZE}
+          totalItems={count}
+        />
+      </section>
+    </>
   );
 }

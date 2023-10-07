@@ -9,13 +9,13 @@ export const CategoriesList = ({
   categories,
 }: CategoriesListProps) => {
   return (
-    <div className="w-100 flex flex-direction-row gap-4">
+    <ul className="w-100 flex flex-direction-row gap-4">
       {categories.map((category) => (
         <CategoryListItem
           category={category}
           key={category.id}
         />
       ))}
-    </div>
+    </ul>
   );
 };

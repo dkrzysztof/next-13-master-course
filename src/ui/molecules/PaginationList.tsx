@@ -15,7 +15,7 @@ export const PaginationList = ({
   totalItems,
 }: PaginationListProps) => {
   const availablePages = getPages(pageSize, totalItems);
-
+  console.log(availablePages)
   return (
     <nav
       role="navigation"

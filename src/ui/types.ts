@@ -40,10 +40,11 @@ export type CollectionItemType = {
   id: string;
   description?: string | null;
   name: string;
-  updatedAt: unknown;
+  slug: string;
   image: {
     url: string;
   };
+  products?: ProductItemType[];
 };
 
 export type ProductVariant =

@@ -1,10 +1,16 @@
-query ProductsGetByCategorySlug($first: Int!, $skip: Int!, $slug: String!) {
+query ProductsGetByCategorySlug(
+  $first: Int!
+  $skip: Int!
+  $slug: String!
+) {
   categories(where: { slug: $slug }) {
     products(first: $first, skip: $skip) {
       ...ProductListFragment
     }
   }
-  productsConnection(where: { slug: $slug }) {
+  productsConnection(
+    where: { categories_some: { slug: $slug } }
+  ) {
     aggregate {
       count
     }
