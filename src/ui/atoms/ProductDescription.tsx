@@ -35,6 +35,7 @@ export const ProductDescription = ({
       sameSite: "lax",
     });
     await addToCart(cart.id, productId);
+
     revalidateTag("cart");
   };
 
@@ -69,13 +70,11 @@ const delay = () =>
 async function getOrCreateCart() {
   const cartId = cookies().get("cartId")?.value;
   if (cartId) {
-    await delay()
     const cart = await getCartById(cartId);
     if (cart.order) {
       return cart.order;
     }
   }
-  await delay()
   const cart = await createCart();
   if (!cart.createOrder) {
     throw new Error("Failed to create cart");

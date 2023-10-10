@@ -33,7 +33,7 @@ export async function Navbar() {
           />
         ))}
         <SearchProducts className="ml-auto" />
-        <UserCartIcon activeLinkProps={activeLinkProps} quantity={cart?.order?.orderItems?.length ?? 0}/>
+        <UserCartIcon activeLinkProps={activeLinkProps} quantity={cart?.orderItems.length ?? 0}/>
       </div>
     </nav>
   );

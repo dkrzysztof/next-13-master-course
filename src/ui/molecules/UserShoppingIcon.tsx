@@ -3,8 +3,6 @@ import {
   ActiveLink,
   ActiveLinkProps,
 } from "../atoms/ActiveLink";
-import { getCartById } from "@/api/carts";
-import { cookies } from "next/headers";
 
 type UserCartIconProps = {
   activeLinkProps: Pick<

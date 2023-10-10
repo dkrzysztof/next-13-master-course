@@ -30,7 +30,6 @@ export const getCartFromCookies = async () => {
 };
 
 export const createCart = async () => {
-  // ToDo: might be needed to add empty object to variables: {}
   return executeQraphql({ query: CreateCartDocument });
 };
 
