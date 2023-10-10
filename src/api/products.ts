@@ -19,10 +19,13 @@ export const getProductsList = async (
   pageNumber: number
 ): Promise<ListPagination<ProductItemType>> => {
   const { products: productsRaw, productsConnection } =
-    await executeQraphql(
-      ProductsGetListDocument,
-      paginationToFirstSkip(pageNumber, pageSize)
-    );
+    await executeQraphql({
+      query: ProductsGetListDocument,
+      variables: paginationToFirstSkip(
+        pageNumber,
+        pageSize
+      ),
+    });
 
   const products: ProductItemType[] = productsRaw.map(
     productFragmentToProductItem
@@ -37,12 +40,12 @@ export const getProductsList = async (
 export const getProductById = async (
   id: ProductItemType["id"]
 ): Promise<ProductItemType> => {
-  const { product } = await executeQraphql(
-    ProductGetByIdDocument,
-    {
+  const { product } = await executeQraphql({
+    query: ProductGetByIdDocument,
+    variables: {
       id,
-    }
-  );
+    },
+  });
 
   if (!product) {
     notFound();
@@ -70,10 +73,13 @@ export const getProductsByCategory = async (
   const {
     categories: [categoryProductsRaw],
     productsConnection,
-  } = await executeQraphql(
-    ProductsGetByCategorySlugDocument,
-    { slug, ...paginationToFirstSkip(pageNumber, pageSize) }
-  );
+  } = await executeQraphql({
+    query: ProductsGetByCategorySlugDocument,
+    variables: {
+      slug,
+      ...paginationToFirstSkip(pageNumber, pageSize),
+    },
+  });
 
   if (!categoryProductsRaw) {
     notFound();
@@ -92,10 +98,10 @@ export const getProductsByCategory = async (
 export const getProductVariants = async (
   id: string
 ): Promise<ProductBaseVariant[]> => {
-  const { product } = await executeQraphql(
-    ProductVariantsListDocument,
-    { id }
-  );
+  const { product } = await executeQraphql({
+    query: ProductVariantsListDocument,
+    variables: { id },
+  });
 
   if (!(product && product.variants)) {
     return [];
@@ -108,8 +114,11 @@ export const getProductsBySearch = async (
   search: string
 ): Promise<ListPagination<ProductItemType>> => {
   const { products: productsRaw, productsConnection } =
-    await executeQraphql(ProductSearchListDocument, {
-      search,
+    await executeQraphql({
+      query: ProductSearchListDocument,
+      variables: {
+        search,
+      },
     });
 
   if (!productsRaw) {

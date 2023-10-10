@@ -10,10 +10,9 @@ import { productFragmentToProductItem } from "@/utils";
 export const getCollectionsList = async (): Promise<
   CollectionItemType[]
 > => {
-  const { collections } = await executeQraphql(
-    CollectionsGetListDocument,
-    {}
-  );
+  const { collections } = await executeQraphql({
+    query: CollectionsGetListDocument,
+  });
 
   if (!collections) {
     return [];
@@ -27,8 +26,11 @@ export const getCollectionBySlug = async (
 ): Promise<CollectionItemType> => {
   const {
     collections: [collection],
-  } = await executeQraphql(CollectionBySlugDocument, {
-    slug,
+  } = await executeQraphql({
+    query: CollectionBySlugDocument,
+    variables: {
+      slug,
+    },
   });
 
   if (!collection) {

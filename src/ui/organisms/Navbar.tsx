@@ -2,14 +2,18 @@ import { ActiveLink } from "../atoms/ActiveLink";
 import { SearchProducts } from "../molecules/SearchProducts";
 import { CategoryNavbarItem } from "../molecules/CategoryNavbar";
 import { getCategoriesList } from "@/api/categories";
+import { UserCartIcon } from "../molecules/UserShoppingIcon";
+import { getCartFromCookies } from "@/api/carts";
 
-export const Navbar = async () => {
+export async function Navbar() {
   const categories = await getCategoriesList();
+  const cart = await getCartFromCookies();
 
   const activeLinkProps = {
     className:
       "text-blue-600 font-normal border-b-2 hover:border-blue-600 py-3 px-4 -mb-0.5 transition-colors transition-all",
-    activeClassName: "border-b-2 border-blue-600 hover:no-underline	font-semibold",
+    activeClassName:
+      "border-b-2 border-blue-600 hover:no-underline	font-semibold",
   };
 
   return (
@@ -29,7 +33,8 @@ export const Navbar = async () => {
           />
         ))}
         <SearchProducts className="ml-auto" />
+        <UserCartIcon activeLinkProps={activeLinkProps} quantity={cart?.order?.orderItems?.length ?? 0}/>
       </div>
     </nav>
   );
-};
+}

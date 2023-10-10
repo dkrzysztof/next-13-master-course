@@ -9,10 +9,9 @@ import {
 export const getCategoriesList = async (): Promise<
   CategoryItemType[]
 > => {
-  const { categories } = await executeQraphql(
-    GetCategoriesListDocument,
-    {}
-  );
+  const { categories } = await executeQraphql({
+    query: GetCategoriesListDocument,
+  });
 
   return categories;
 };
@@ -22,8 +21,11 @@ export const getCategoryBySlug = async (
 ): Promise<CategoryItemType> => {
   const {
     categories: [category],
-  } = await executeQraphql(GetCategoryBySlugDocument, {
-    slug,
+  } = await executeQraphql({
+    query: GetCategoryBySlugDocument,
+    variables: {
+      slug,
+    },
   });
 
   if (!category) {
