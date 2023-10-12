@@ -17,24 +17,31 @@ export async function Navbar() {
   };
 
   return (
-    <nav className="w-full sticky top-0 z-10 border-2 border-b-gray-200 backdrop-blur-md">
-      <div className="w-full h-full mx-auto max-w-2xl md:max-w-4xl lg:max-w-7xl flex gap-x-4 items-center hover:bottom-2">
-        <ActiveLink href="/" exact {...activeLinkProps}>
-          Home
-        </ActiveLink>
-        <ActiveLink href="/products" {...activeLinkProps}>
-          All
-        </ActiveLink>
-        {categories.slice(0, 3).map((category) => (
-          <CategoryNavbarItem
-            category={category}
-            key={category.id}
-            {...activeLinkProps}
+    <div className="w-full sticky top-0 z-10 border-2 border-b-gray-200 backdrop-blur-md">
+      <div className="w-full flex max-w-lg md:max-w-4xl lg:max-w-7xl  mx-auto">
+        <nav className="w-full h-full mx-auto flex gap-x-4 items-center hover:bottom-2">
+          <ActiveLink href="/" exact {...activeLinkProps}>
+            Home
+          </ActiveLink>
+          <ActiveLink href="/products" {...activeLinkProps}>
+            All
+          </ActiveLink>
+          {categories.slice(0, 3).map((category) => (
+            <CategoryNavbarItem
+              category={category}
+              key={category.id}
+              {...activeLinkProps}
+            />
+          ))}
+        </nav>
+        <div className="w-full h-full mx-auto flex gap-x-4 items-center hover:bottom-2">
+          <SearchProducts className="ml-auto" />
+          <UserCartIcon
+            activeLinkProps={activeLinkProps}
+            quantity={cart?.orderItems.length ?? 0}
           />
-        ))}
-        <SearchProducts className="ml-auto" />
-        <UserCartIcon activeLinkProps={activeLinkProps} quantity={cart?.orderItems.length ?? 0}/>
+        </div>
       </div>
-    </nav>
+    </div>
   );
 }
