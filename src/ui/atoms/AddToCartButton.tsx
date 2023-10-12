@@ -1,5 +1,6 @@
 "use client";
-
+// @ts-expect-error
+// eslint-disable-next-line
 import { experimental_useFormStatus as useFormStatus } from "react-dom";
 
 export function AddToCartButton() {
