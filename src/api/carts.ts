@@ -4,7 +4,9 @@ import {
   AddProductToCartDocument,
   CartGetByIdDocument,
   CreateCartDocument,
+  GetOrderItemByIdDocument,
   ProductGetByIdDocument,
+  PublishOrderItemDocument,
 } from "@/gql/graphql";
 
 export const getCartById = async (id: string) => {
@@ -42,10 +44,16 @@ export const createCart = async () => {
   return executeQraphql({ query: CreateCartDocument });
 };
 
-export const addToCart = async (
-  orderId: string,
-  productId: string
-) => {
+type AddToCartParams = {
+  orderId: string;
+  productId: string;
+  orderItemId?: string;
+};
+export const addToCart = async ({
+  orderId,
+  productId,
+  orderItemId,
+}: AddToCartParams) => {
   const { product } = await executeQraphql({
     query: ProductGetByIdDocument,
     variables: { id: productId },
@@ -55,12 +63,74 @@ export const addToCart = async (
     throw new Error("Product not found");
   }
 
-  return executeQraphql({
+  const orderItem = orderItemId
+    ? await getOrderItemById(orderItemId)
+    : null;
+
+  const quantity = orderItem?.quantity || 0;
+  const total = orderItem?.total || 0;
+
+  const { upsertOrderItem } = await executeQraphql({
     query: AddProductToCartDocument,
     variables: {
       orderId,
       productId,
-      total: product.price,
+      orderItemId,
+      quantity: quantity + 1,
+      total: total + product.price,
+    },
+  });
+
+  if (upsertOrderItem) {
+    await publishOrderItem(upsertOrderItem.id);
+  }
+
+  return upsertOrderItem;
+};
+
+// const modifyProductCountInCart = ({
+//   orderItemId,
+//   quantity,
+//   productId,
+// }: Required<AddToCartParams>) => {
+//   const { product } = await executeQraphql({
+//     query: ProductGetByIdDocument,
+//     variables: { id: productId },
+//   });
+
+//   if (!product) {
+//     throw new Error("Product not found");
+//   }
+
+//   return executeQraphql({
+//     query: AddProductToCartDocument,
+//     variables: {
+//       total: quantity * product.price,
+//       quantity,
+//       orderItemId,
+//       productId
+//     },
+//   });
+// }
+
+export const getOrderItemById = async (id: string) => {
+  const { orderItem } = await executeQraphql({
+    query: GetOrderItemByIdDocument,
+    variables: {
+      id,
+    },
+  });
+
+  return orderItem;
+};
+
+export const publishOrderItem = async (
+  orderItemId: string
+) => {
+  return executeQraphql({
+    query: PublishOrderItemDocument,
+    variables: {
+      id: orderItemId,
     },
   });
 };

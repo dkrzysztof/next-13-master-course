@@ -1,0 +1,7 @@
+query GetOrderItemById($id: ID!) {
+  orderItem(where: { id: $id }) {
+    id
+    quantity
+    total
+  }
+}

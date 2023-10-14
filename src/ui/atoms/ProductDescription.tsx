@@ -8,7 +8,7 @@ import {
   getCartById,
 } from "@/api/carts";
 import { AddToCartButton } from "./AddToCartButton";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 type ProductDescriptionProps = {
   product: ProductItemType;
@@ -21,6 +21,7 @@ export const ProductDescription = ({
     category,
     description,
     price,
+    orderItem,
   },
 }: ProductDescriptionProps) => {
   const addToCartAction = async (_formData: FormData) => {
@@ -34,9 +35,14 @@ export const ProductDescription = ({
       httpOnly: false,
       sameSite: "lax",
     });
-    await addToCart(cart.id, productId);
+    await addToCart({
+      orderId: cart.id,
+      productId,
+      orderItemId: orderItem?.id,
+    });
 
     revalidateTag("cart");
+    revalidatePath(`/product/${productId}`);
   };
 
   return (

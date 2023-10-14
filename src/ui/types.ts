@@ -28,6 +28,9 @@ export type ProductItemType = {
     src: string;
     alt: string;
   };
+  orderItem?:{
+    id: string;
+  }
 };
 
 export type CategoryItemType = {

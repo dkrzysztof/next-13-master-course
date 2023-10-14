@@ -12,6 +12,7 @@ import {
 import { ProductVariants } from "@/ui/molecules/ProductVariants";
 import { ReviewsOrganism } from "@/ui/organisms/ReviewsOrganism";
 import { getProductReviews } from "@/api/reviews";
+import { getCartFromCookies } from "@/api/carts";
 
 export type SingleProductPageProps = {
   params: { productId: string };
@@ -31,13 +32,13 @@ export const generateMetadata = async ({
 export default async function SingleProductPage({
   params: { productId },
 }: SingleProductPageProps) {
-  const product = await getProductById(productId);
+  const cart = await getCartFromCookies();
+  const product = await getProductById(productId, cart?.id);
   const productVariants = await getProductVariants(
     productId
   );
 
   const reviews = await getProductReviews(productId);
-  console.log("refresh parent component");
 
   return (
     <section className="mx-auto max-w-2xl px-8 py-4 sm:px-6 sm:py-4 md:max-w-4xl lg:max-w-7xl">

@@ -1,4 +1,4 @@
-query ProductGetById($id: ID!) {
+query ProductGetById($id: ID!, $orderId: ID) {
   product(where: { id: $id }) {
     id
     name
@@ -11,6 +11,8 @@ query ProductGetById($id: ID!) {
       url
     }
     price
+    orderItems(where: { order: { id: $orderId } }){
+      id
+    }
   }
 }
- 

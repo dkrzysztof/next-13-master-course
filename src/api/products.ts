@@ -38,12 +38,14 @@ export const getProductsList = async (
 };
 
 export const getProductById = async (
-  id: ProductItemType["id"]
+  id: ProductItemType["id"],
+  orderId?: string
 ): Promise<ProductItemType> => {
   const { product } = await executeQraphql({
     query: ProductGetByIdDocument,
     variables: {
       id,
+      orderId
     },
   });
 
@@ -62,6 +64,7 @@ export const getProductById = async (
     },
     price: product.price,
     description: product.description,
+    orderItem: product.orderItems[0]
   };
 };
 
