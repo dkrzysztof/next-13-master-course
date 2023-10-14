@@ -1,3 +1,4 @@
+"use client"
 import { Input } from "@/ui/atoms/Input";
 import { Rating } from "@mui/material";
 
@@ -11,7 +12,7 @@ export const AddReviewForm = ({
   productId,
 }: AddReviewFormProps) => {
   return (
-    <form action={action} data-testid="add-review-form">
+    <form data-testid="add-review-form">
       <Input
         name="productId"
         initialValue={productId}
@@ -50,6 +51,7 @@ export const AddReviewForm = ({
       <button
         className="py-2 px-6 rounded-lg border-4 border-white hover:bg-blue-400 active:border-blue-200 bg-blue-600 text-white transition-all"
         type="submit"
+        formAction={action}
       >
         Save
       </button>

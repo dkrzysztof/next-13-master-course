@@ -23,3 +23,9 @@ export const SuggestedProductsList = async ({
     </div>
   );
 };
+
+export const SuggestedProductsListSuspense = () => {
+  return <div style={{ height: "312.25px" }}>
+    <h1 className="text-lg text-slate-500 italic">Ładowanie...</h1>
+  </div>;
+};

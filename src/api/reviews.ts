@@ -1,6 +1,7 @@
 import {
   AddReviewToProductDocument,
   GetReviewsByProductIdDocument,
+  PublishReviewDocument,
 } from "@/gql/graphql";
 import { executeQraphql } from ".";
 
@@ -25,6 +26,8 @@ export const addReviewToProduct = async (
     throw new Error("createReview is not defined");
   }
 
+  await publishReview(response.createReview.id);
+
   return { id: response.createReview.id };
 };
 
@@ -40,4 +43,17 @@ export const getProductReviews = async (
   });
 
   return reviews;
+};
+
+export const publishReview = async (reviewId: string) => {
+  const response = await executeQraphql({
+    query: PublishReviewDocument,
+    variables: { id: reviewId },
+  });
+
+  if(!response.publishReview){
+    throw new Error(`Error during publishing review: ${reviewId}`)
+  }
+
+  return response.publishReview.id
 };

@@ -14,7 +14,7 @@ mutation AddReviewToProduct(
       email: $email
       rating: $rating
       product: { connect: { id: $productId } }
-    }
+    },
   ) {
     id
   }

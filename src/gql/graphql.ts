@@ -10866,6 +10866,13 @@ export type GetReviewsByProductIdQueryVariables = Exact<{
 
 export type GetReviewsByProductIdQuery = { reviews: Array<{ id: string, name: string, rating: number, content: string, email: string, headline: string }> };
 
+export type PublishReviewMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type PublishReviewMutation = { publishReview?: { id: string } | null };
+
 export class TypedDocumentString<TResult, TVariables>
   extends String
   implements DocumentTypeDecoration<TResult, TVariables>
@@ -11152,3 +11159,10 @@ export const GetReviewsByProductIdDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetReviewsByProductIdQuery, GetReviewsByProductIdQueryVariables>;
+export const PublishReviewDocument = new TypedDocumentString(`
+    mutation PublishReview($id: ID!) {
+  publishReview(to: PUBLISHED, where: {id: $id}) {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<PublishReviewMutation, PublishReviewMutationVariables>;
