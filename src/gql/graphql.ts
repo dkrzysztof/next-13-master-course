@@ -10753,7 +10753,7 @@ export type ProductGetByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductGetByIdQuery = { product?: { id: string, name: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }>, orderItems: Array<{ id: string }> } | null };
+export type ProductGetByIdQuery = { product?: { id: string, name: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }>, orderItems: Array<{ id: string, quantity: number, total: number }> } | null };
 
 export type ProductListFragmentFragment = { id: string, name: string, description: string, price: number, slug: string, images: Array<{ url: string }>, categories: Array<{ id: string, name: string }> };
 
@@ -10831,6 +10831,13 @@ export type PublishOrderItemMutationVariables = Exact<{
 
 
 export type PublishOrderItemMutation = { publishOrderItem?: { id: string } | null };
+
+export type PublishOrderMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type PublishOrderMutation = { publishOrder?: { id: string } | null };
 
 export type CartSetProductQuantityMutationVariables = Exact<{
   itemId: Scalars['ID']['input'];
@@ -10936,6 +10943,8 @@ export const ProductGetByIdDocument = new TypedDocumentString(`
     price
     orderItems(where: {order: {id: $orderId}}) {
       id
+      quantity
+      total
     }
   }
 }
@@ -11108,6 +11117,13 @@ export const PublishOrderItemDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<PublishOrderItemMutation, PublishOrderItemMutationVariables>;
+export const PublishOrderDocument = new TypedDocumentString(`
+    mutation PublishOrder($id: ID!) {
+  publishOrder(to: PUBLISHED, where: {id: $id}) {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<PublishOrderMutation, PublishOrderMutationVariables>;
 export const CartSetProductQuantityDocument = new TypedDocumentString(`
     mutation CartSetProductQuantity($itemId: ID!, $quantity: Int!) {
   updateOrderItem(where: {id: $itemId}, data: {quantity: $quantity}) {

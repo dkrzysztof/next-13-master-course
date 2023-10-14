@@ -13,6 +13,8 @@ query ProductGetById($id: ID!, $orderId: ID) {
     price
     orderItems(where: { order: { id: $orderId } }){
       id
+      quantity
+      total
     }
   }
 }

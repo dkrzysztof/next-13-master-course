@@ -23,7 +23,7 @@ export function ChangeQuantity({
       <button
         className="h-6 w-6 border"
         type="submit"
-        data-testid="increment"
+        data-testid="decrement"
         formAction={async () => {
           setOptimisticQuantity(optimisticQuantity - 1);
           await changeItemQuantity(

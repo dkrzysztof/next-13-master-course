@@ -14,7 +14,7 @@ import * as types from './graphql';
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "query ProductGetById($id: ID!, $orderId: ID) {\n  product(where: {id: $id}) {\n    id\n    name\n    description\n    categories(first: 1) {\n      name\n      slug\n    }\n    images(first: 1) {\n      url\n    }\n    price\n    orderItems(where: {order: {id: $orderId}}) {\n      id\n    }\n  }\n}": types.ProductGetByIdDocument,
+    "query ProductGetById($id: ID!, $orderId: ID) {\n  product(where: {id: $id}) {\n    id\n    name\n    description\n    categories(first: 1) {\n      name\n      slug\n    }\n    images(first: 1) {\n      url\n    }\n    price\n    orderItems(where: {order: {id: $orderId}}) {\n      id\n      quantity\n      total\n    }\n  }\n}": types.ProductGetByIdDocument,
     "fragment ProductListFragment on Product {\n  id\n  name\n  description\n  price\n  slug\n  images(first: 1) {\n    url\n  }\n  categories {\n    id\n    name\n  }\n}": types.ProductListFragmentFragmentDoc,
     "query ProductSearchList($search: String!) {\n  products(where: {name_contains: $search}) {\n    ...ProductListFragment\n  }\n  productsConnection(where: {name_contains: $search}) {\n    aggregate {\n      count\n    }\n  }\n}": types.ProductSearchListDocument,
     "query ProductVariantsList($id: ID!) {\n  product(where: {id: $id}) {\n    variants {\n      ... on ProductSizeColorVariant {\n        __typename\n        id\n        name\n      }\n      ... on ProductSizeVariant {\n        __typename\n        id\n        name\n      }\n      ... on ProductColorVariant {\n        __typename\n        id\n        name\n      }\n    }\n  }\n}": types.ProductVariantsListDocument,
@@ -26,6 +26,7 @@ const documents = {
     "query CartGetById($id: ID!) {\n  order(where: {id: $id}, stage: DRAFT) {\n    id\n    orderItems {\n      id\n      quantity\n      total\n      product {\n        ...ProductListFragment\n      }\n    }\n  }\n}": types.CartGetByIdDocument,
     "query GetOrderItemById($id: ID!) {\n  orderItem(where: {id: $id}) {\n    id\n    quantity\n    total\n  }\n}": types.GetOrderItemByIdDocument,
     "mutation PublishOrderItem($id: ID!) {\n  publishOrderItem(to: PUBLISHED, where: {id: $id}) {\n    id\n  }\n}": types.PublishOrderItemDocument,
+    "mutation PublishOrder($id: ID!) {\n  publishOrder(to: PUBLISHED, where: {id: $id}) {\n    id\n  }\n}": types.PublishOrderDocument,
     "mutation CartSetProductQuantity($itemId: ID!, $quantity: Int!) {\n  updateOrderItem(where: {id: $itemId}, data: {quantity: $quantity}) {\n    id\n  }\n}": types.CartSetProductQuantityDocument,
     "query GetCategoriesList {\n  categories {\n    id\n    name\n    slug\n  }\n}": types.GetCategoriesListDocument,
     "query GetCategoryBySlug($slug: String!) {\n  categories(where: {slug_contains: $slug}, first: 1) {\n    id\n    name\n    slug\n  }\n}": types.GetCategoryBySlugDocument,
@@ -39,7 +40,7 @@ const documents = {
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query ProductGetById($id: ID!, $orderId: ID) {\n  product(where: {id: $id}) {\n    id\n    name\n    description\n    categories(first: 1) {\n      name\n      slug\n    }\n    images(first: 1) {\n      url\n    }\n    price\n    orderItems(where: {order: {id: $orderId}}) {\n      id\n    }\n  }\n}"): typeof import('./graphql').ProductGetByIdDocument;
+export function graphql(source: "query ProductGetById($id: ID!, $orderId: ID) {\n  product(where: {id: $id}) {\n    id\n    name\n    description\n    categories(first: 1) {\n      name\n      slug\n    }\n    images(first: 1) {\n      url\n    }\n    price\n    orderItems(where: {order: {id: $orderId}}) {\n      id\n      quantity\n      total\n    }\n  }\n}"): typeof import('./graphql').ProductGetByIdDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -84,6 +85,10 @@ export function graphql(source: "query GetOrderItemById($id: ID!) {\n  orderItem
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation PublishOrderItem($id: ID!) {\n  publishOrderItem(to: PUBLISHED, where: {id: $id}) {\n    id\n  }\n}"): typeof import('./graphql').PublishOrderItemDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation PublishOrder($id: ID!) {\n  publishOrder(to: PUBLISHED, where: {id: $id}) {\n    id\n  }\n}"): typeof import('./graphql').PublishOrderDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

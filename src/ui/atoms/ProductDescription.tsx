@@ -21,7 +21,6 @@ export const ProductDescription = ({
     category,
     description,
     price,
-    orderItem,
   },
 }: ProductDescriptionProps) => {
   const addToCartAction = async (_formData: FormData) => {
@@ -38,11 +37,9 @@ export const ProductDescription = ({
     await addToCart({
       orderId: cart.id,
       productId,
-      orderItemId: orderItem?.id,
     });
 
     revalidateTag("cart");
-    revalidatePath(`/product/${productId}`);
   };
 
   return (

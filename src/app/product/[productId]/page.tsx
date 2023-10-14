@@ -32,8 +32,7 @@ export const generateMetadata = async ({
 export default async function SingleProductPage({
   params: { productId },
 }: SingleProductPageProps) {
-  const cart = await getCartFromCookies();
-  const product = await getProductById(productId, cart?.id);
+  const product = await getProductById(productId);
   const productVariants = await getProductVariants(
     productId
   );
