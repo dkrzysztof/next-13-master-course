@@ -1,24 +1,12 @@
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { CartGetByIdDocument } from "@/gql/graphql";
 import { formatMoney } from "@/utils";
-import { executeQraphql } from "@/api";
 import { ChangeQuantity } from "./IncrementProductQuantity";
+import { RemoveButton } from "./RemoveButton";
+import { getCartFromCookies } from "@/api/carts";
+import { handleStripePaymentAction } from "./actions";
 
 export default async function CartPage() {
-  const cartId = cookies().get("cartId")?.value;
-
-  if (!cartId) {
-    redirect("/");
-  }
-
-  const { order: cart } = await executeQraphql({
-    query: CartGetByIdDocument,
-    variables: {
-      id: cartId,
-    },
-  });
-
+  const cart = await getCartFromCookies();
   if (!cart) {
     redirect("/");
   }
@@ -49,11 +37,25 @@ export default async function CartPage() {
                   />
                 </td>
                 <td>{formatMoney(item.product.price)}</td>
+                <td className="px-4 py-2">
+                  <RemoveButton itemId={item.id} />
+                </td>
               </tr>
             );
           })}
         </tbody>
       </table>
+      <form
+        action={handleStripePaymentAction}
+        className="ml-auto"
+      >
+        <button
+          type="submit"
+          className="w-full max-w-lg rounded-md border bg-slate-900 px-8 py-2 text-white shadow-sm transition-colors hover:bg-slate-850"
+        >
+          Pay
+        </button>
+      </form>
     </div>
   );
 }

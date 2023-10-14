@@ -19,7 +19,7 @@ export const SuggestedProductsList = async ({
   await sleepForTime(5000);
   return (
     <div data-testid="related-products">
-      <ProductList products={products} />;
+      <ProductList products={products} />
     </div>
   );
 };

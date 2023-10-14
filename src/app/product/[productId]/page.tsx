@@ -1,23 +1,24 @@
 import { Suspense } from "react";
 import {
-  getProductById, getProductVariants,
+  getProductById,
+  getProductVariants,
 } from "@/api/products";
 import { ProductImage } from "@/ui/atoms/ProductImage";
 import { ProductDescription } from "@/ui/atoms/ProductDescription";
 import { SuggestedProductsList } from "@/ui/organisms/SuggestedProductsList";
 import { ProductVariants } from "@/ui/molecules/ProductVariants";
+import { ReviewsOrganism } from "@/ui/organisms/ReviewsOrganism";
 
-type SingleProductPageProps = {
+export type SingleProductPageProps = {
   params: { productId: string };
 };
-
 
 export const generateMetadata = async ({
   params: { productId },
 }: SingleProductPageProps) => {
   const product = await getProductById(productId);
   return {
-    title: `${product.name} - Sklep internetowy`,
+    title: product.name,
     description: product.description,
     image: product.coverImage?.src,
   };
@@ -27,7 +28,9 @@ export default async function SingleProductPage({
   params: { productId },
 }: SingleProductPageProps) {
   const product = await getProductById(productId);
-  const productVariants = await getProductVariants(productId);
+  const productVariants = await getProductVariants(
+    productId
+  );
 
   return (
     <section className="mx-auto max-w-2xl px-8 py-4 sm:px-6 sm:py-4 md:max-w-4xl lg:max-w-7xl">
@@ -47,9 +50,14 @@ export default async function SingleProductPage({
           Mogą ci się spodobać:
         </h3>
         <Suspense fallback="Ładowanie...">
-          <SuggestedProductsList categorySlug={product.categorySlug} />
+          <SuggestedProductsList
+            categorySlug={product.categorySlug}
+          />
         </Suspense>
       </aside>
+      <aside className="mt-8 flex flex-row gap-20">
+        <ReviewsOrganism productId={productId} />
+      </aside>
     </section>
-  );  
+  );
 }

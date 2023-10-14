@@ -16,17 +16,26 @@ export const getCartById = async (id: string) => {
 
 export const getCartFromCookies = async () => {
   const cartId = cookies().get("cartId")?.value;
-  const cart = cartId
-    ? await executeQraphql({
-        query: CartGetByIdDocument,
-        variables: {
-          id: cartId,
-        },
-        next: ["cart"] as NextFetchRequestConfig,
-      })
-    : null;
 
-  return cart?.order;
+  if (!cartId) {
+    return;
+  }
+
+  const cart = await executeQraphql({
+    query: CartGetByIdDocument,
+    variables: {
+      id: cartId,
+    },
+    cache: "no-store",
+    next: {
+      tags: ["cart"],
+    },
+  });
+
+  if (!cart.order) {
+    return;
+  }
+  return cart.order;
 };
 
 export const createCart = async () => {

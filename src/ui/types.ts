@@ -74,3 +74,12 @@ export interface ProductSizeVariant
   __typename: "ProductSizeVariant";
   size: string;
 }
+
+
+export interface ReviewItemType{
+  id: string;
+  headline: string;
+  rating: number;
+  content: string;
+  name:string;
+}

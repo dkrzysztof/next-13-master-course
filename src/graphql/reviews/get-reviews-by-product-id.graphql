@@ -1,0 +1,10 @@
+query GetReviewsByProductId($productId: ID!) {
+  reviews(where: { product: { id: $productId } }) {
+    id
+    name
+    rating
+    content
+    email
+    headline
+  }
+}

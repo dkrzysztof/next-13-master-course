@@ -10796,6 +10796,13 @@ export type AddProductToCartMutationVariables = Exact<{
 
 export type AddProductToCartMutation = { createOrderItem?: { id: string } | null };
 
+export type CartRemoveProductMutationVariables = Exact<{
+  itemId: Scalars['ID']['input'];
+}>;
+
+
+export type CartRemoveProductMutation = { deleteOrderItem?: { id: string } | null };
+
 export type CreateCartMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -10839,6 +10846,25 @@ export type CollectionsGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CollectionsGetListQuery = { collections: Array<{ id: string, name: string, description?: string | null, slug: string, image: { url: string } }> };
+
+export type AddReviewToProductMutationVariables = Exact<{
+  productId: Scalars['ID']['input'];
+  headline: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  content: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+  rating: Scalars['Int']['input'];
+}>;
+
+
+export type AddReviewToProductMutation = { createReview?: { id: string } | null };
+
+export type GetReviewsByProductIdQueryVariables = Exact<{
+  productId: Scalars['ID']['input'];
+}>;
+
+
+export type GetReviewsByProductIdQuery = { reviews: Array<{ id: string, name: string, rating: number, content: string, email: string, headline: string }> };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -10996,6 +11022,13 @@ export const AddProductToCartDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<AddProductToCartMutation, AddProductToCartMutationVariables>;
+export const CartRemoveProductDocument = new TypedDocumentString(`
+    mutation CartRemoveProduct($itemId: ID!) {
+  deleteOrderItem(where: {id: $itemId}) {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<CartRemoveProductMutation, CartRemoveProductMutationVariables>;
 export const CreateCartDocument = new TypedDocumentString(`
     mutation CreateCart {
   createOrder(data: {total: 0}) {
@@ -11098,3 +11131,24 @@ export const CollectionsGetListDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<CollectionsGetListQuery, CollectionsGetListQueryVariables>;
+export const AddReviewToProductDocument = new TypedDocumentString(`
+    mutation AddReviewToProduct($productId: ID!, $headline: String!, $name: String!, $content: String!, $email: String!, $rating: Int!) {
+  createReview(
+    data: {headline: $headline, name: $name, content: $content, email: $email, rating: $rating, product: {connect: {id: $productId}}}
+  ) {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<AddReviewToProductMutation, AddReviewToProductMutationVariables>;
+export const GetReviewsByProductIdDocument = new TypedDocumentString(`
+    query GetReviewsByProductId($productId: ID!) {
+  reviews(where: {product: {id: $productId}}) {
+    id
+    name
+    rating
+    content
+    email
+    headline
+  }
+}
+    `) as unknown as TypedDocumentString<GetReviewsByProductIdQuery, GetReviewsByProductIdQueryVariables>;
