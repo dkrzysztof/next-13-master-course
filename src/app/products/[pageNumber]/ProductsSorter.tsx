@@ -55,10 +55,16 @@ export const ProductsSorter = ({
           Price Ascending
         </option>
 
-        <option value={"rating-desc"}>
+        <option
+          value={"rating-desc"}
+          data-testid="sort-by-rating"
+        >
           Rating (High to Low)
         </option>
-        <option value={"rating-asc"}>
+        <option
+          value={"rating-asc"}
+          data-testid="sort-by-rating"
+        >
           Rating (Low to High)
         </option>
       </select>
