@@ -32,11 +32,10 @@ export const ProductListItemDescription = ({
           </span>
         </p>
         <p className="flex flex-nowrap text-sm font-medium text-gray-900 text-right align-middle">
-          (
-          {rating && rating > 0
-            ? rating?.toFixed(1)
-            : rating?.toFixed(0)}
-          ) <Rating value={rating} readOnly size="small" />
+          <span data-testid="product-rating">
+            {rating ? rating?.toFixed(1) : 0.0}/5
+          </span>
+          <Rating value={rating} readOnly size="small" />
         </p>
       </div>
     </div>
