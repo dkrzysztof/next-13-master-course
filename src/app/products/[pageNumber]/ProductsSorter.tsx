@@ -1,8 +1,7 @@
-"use client";
+"use client"
 import { SortingProductsList } from "@/api/products";
 import { Route } from "next";
 import { redirect, useRouter } from "next/navigation";
-
 
 export type ProductsSorter = {
   currentSorting: SortingProductsList | "";
@@ -19,7 +18,8 @@ export const ProductsSorter = ({
     const path = `/products/${pageNumber}${
       value ? `?order=${value}` : ""
     }`;
-    redirect(path as Route);
+    router.push(path as Route);
+    router.refresh();
   };
 
   return (
