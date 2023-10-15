@@ -15,7 +15,7 @@ export default async function Home() {
   );
 
   const collections = await getCollectionsList();
-    redirect("/products?order=price-desc")
+  
   return (
     <>
       <section className="mx-auto max-w-2xl px-8 pt-12 pb-4 sm:px-6 sm:py-4 md:max-w-4xl lg:max-w-7xl">

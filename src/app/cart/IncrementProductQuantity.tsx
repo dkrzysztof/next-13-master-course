@@ -34,7 +34,7 @@ export function ChangeQuantity({
       >
         -
       </button>
-      <span className="w-8 text-center" data-testid="quantity">
+      <span className="w-8 text-center" data-testid="quantity" >
         {optimisticQuantity}
       </span>
       <button
