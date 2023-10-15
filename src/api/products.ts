@@ -70,11 +70,7 @@ export const getProductsList = async (
       ),
       cache:"no-cache"
     });
-  console.log(
-    productsRaw.map((x) => ({
-      rating: x.rating,
-    }))
-  );
+
   const products: ProductItemType[] = productsRaw.map(
     productFragmentToProductItem
   );

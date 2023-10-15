@@ -29,6 +29,14 @@ export const generateMetadata = async ({
   };
 };
 
+// export const generateStaticParams = async ():SingleProductPageProps["params"][] => {
+//   return [
+//     {
+//       productId: "ckdu44mn40gxh010405uwgbtw",
+//     },
+//   ];
+// };
+
 export default async function SingleProductPage({
   params: { productId },
   ...props

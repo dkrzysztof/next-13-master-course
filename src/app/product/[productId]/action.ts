@@ -10,6 +10,7 @@ export async function handleAddProductReview(
   productId: string,
   review: AddReviewType
 ) { 
+  "use server";
   await addReviewToProduct({ ...review, productId });
   await recalculateProductAverageReview(
     productId

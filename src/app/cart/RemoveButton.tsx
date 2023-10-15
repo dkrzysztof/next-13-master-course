@@ -20,7 +20,6 @@ export const RemoveButton = ({
       disabled={isPending}
       formAction={() => {
         startTransistion(async () => {
-          console.log("remove");
           await removeItem(itemId);
           router.refresh();
         });

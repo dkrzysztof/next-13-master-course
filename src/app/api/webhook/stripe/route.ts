@@ -31,7 +31,6 @@ export async function POST(request: NextRequest) {
 
   switch (event.type) {
     case "checkout.session.completed": {
-      console.log(event.data.object.metadata)
       event.data.object.metadata?.cartId
     }
     case "checkout.session.async_payment_succeeded":

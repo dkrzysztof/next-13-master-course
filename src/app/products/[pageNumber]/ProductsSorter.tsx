@@ -1,18 +1,8 @@
 "use client";
 import { SortingProductsList } from "@/api/products";
-import {
-  InputLabel,
-  Select,
-  MenuItem,
-  FormControl,
-  SelectChangeEvent,
-} from "@mui/material";
 import { Route } from "next";
-import { useRouter } from "next/navigation";
-import {
-  ChangeEventHandler,
-  ReactEventHandler,
-} from "react";
+import { redirect, useRouter } from "next/navigation";
+
 
 export type ProductsSorter = {
   currentSorting: SortingProductsList | "";
@@ -29,7 +19,7 @@ export const ProductsSorter = ({
     const path = `/products/${pageNumber}${
       value ? `?order=${value}` : ""
     }`;
-    router.push(path as Route);
+    redirect(path as Route);
   };
 
   return (
@@ -54,15 +44,14 @@ export const ProductsSorter = ({
         >
           Price Ascending
         </option>
-
         <option
-          value={"rating-desc"}
+          value="rating-desc"
           data-testid="sort-by-rating"
         >
           Rating (High to Low)
         </option>
         <option
-          value={"rating-asc"}
+          value="rating-asc"
           data-testid="sort-by-rating"
         >
           Rating (Low to High)
