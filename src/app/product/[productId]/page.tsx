@@ -31,6 +31,7 @@ export const generateMetadata = async ({
 
 export default async function SingleProductPage({
   params: { productId },
+  ...props
 }: SingleProductPageProps) {
   const product = await getProductById(productId);
   const productVariants = await getProductVariants(

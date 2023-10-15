@@ -1,6 +1,7 @@
 import {
   AddReviewToProductDocument,
   GetReviewsByProductIdDocument,
+  ProductGetReviewsDocument,
   PublishReviewDocument,
 } from "@/gql/graphql";
 import { executeQraphql } from ".";
@@ -51,9 +52,28 @@ export const publishReview = async (reviewId: string) => {
     variables: { id: reviewId },
   });
 
-  if(!response.publishReview){
-    throw new Error(`Error during publishing review: ${reviewId}`)
+  if (!response.publishReview) {
+    throw new Error(
+      `Error during publishing review: ${reviewId}`
+    );
   }
 
-  return response.publishReview.id
+  return response.publishReview.id;
+};
+
+export const getProductReviewsRatings = async (
+  productId: string
+) => {
+  const products = await executeQraphql({
+    query: ProductGetReviewsDocument,
+    variables: {
+      id: productId,
+    },
+  });
+
+  if(!products.product){
+    throw new Error("Product does not exist");
+  }
+
+  return products.product.reviews;
 };

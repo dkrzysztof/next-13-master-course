@@ -7,15 +7,16 @@ type PaginationListProps = {
   rootPath: Route;
   pageSize: number;
   totalItems: number;
+  searchParamsString?: string;
 };
 
 export const PaginationList = ({
   rootPath,
   pageSize,
   totalItems,
+  searchParamsString,
 }: PaginationListProps) => {
   const availablePages = getPages(pageSize, totalItems);
-  console.log(availablePages)
   return (
     <nav
       role="navigation"
@@ -24,8 +25,8 @@ export const PaginationList = ({
     >
       {availablePages.map((page) => (
         <ActiveLink
-          exact
           href={`${rootPath}/${page}` as Route}
+          searchParams={searchParamsString}
           key={page}
           className="px-3 py-1 mr-1 hover:text-white hover:bg-blue-600 rounded-lg transition-colors cursor-pointer"
           activeClassName="bg-blue-500 text-white"

@@ -34,8 +34,6 @@ export const ReviewsOrganism = ({
       ]
     );
 
-  console.log(reviews.length, optimisticReviews.length);
-
   return (
     <>
       <div className="flex-auto w-1/3">

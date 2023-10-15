@@ -63,13 +63,6 @@ export const ProductDescription = ({
   );
 };
 
-const delay = () =>
-  new Promise<void>((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, 500);
-  });
-
 async function getOrCreateCart() {
   const cartId = cookies().get("cartId")?.value;
   if (cartId) {

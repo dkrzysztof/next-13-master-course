@@ -92,31 +92,6 @@ export const addToCart = async ({
   return upsertOrderItem;
 };
 
-// const modifyProductCountInCart = ({
-//   orderItemId,
-//   quantity,
-//   productId,
-// }: Required<AddToCartParams>) => {
-//   const { product } = await executeQraphql({
-//     query: ProductGetByIdDocument,
-//     variables: { id: productId },
-//   });
-
-//   if (!product) {
-//     throw new Error("Product not found");
-//   }
-
-//   return executeQraphql({
-//     query: AddProductToCartDocument,
-//     variables: {
-//       total: quantity * product.price,
-//       quantity,
-//       orderItemId,
-//       productId
-//     },
-//   });
-// }
-
 export const getOrderItemById = async (id: string) => {
   const { orderItem } = await executeQraphql({
     query: GetOrderItemByIdDocument,

@@ -11,6 +11,7 @@ query ProductGetById($id: ID!, $orderId: ID) {
       url
     }
     price
+    rating
     orderItems(where: { order: { id: $orderId } }){
       id
       quantity

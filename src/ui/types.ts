@@ -9,10 +9,7 @@ export type ProductResponseItem = {
   price: number;
   description: string;
   category: string;
-  rating: {
-    rate: number;
-    count: number;
-  };
+  rating: number;
   image: string;
   longDescription: string;
 };
@@ -23,6 +20,7 @@ export type ProductItemType = {
   category: string;
   categorySlug: string;
   description: string;
+  rating: number;
   price: number;
   coverImage?: {
     src: string;

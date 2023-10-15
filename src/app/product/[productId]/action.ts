@@ -1,5 +1,6 @@
 "use server";
 
+import { recalculateProductAverageReview } from "@/api/products";
 import {
   AddReviewType,
   addReviewToProduct,
@@ -8,6 +9,9 @@ import {
 export async function handleAddProductReview(
   productId: string,
   review: AddReviewType
-) {
-  addReviewToProduct({ ...review, productId });
+) { 
+  await addReviewToProduct({ ...review, productId });
+  await recalculateProductAverageReview(
+    productId
+  );
 }

@@ -4,6 +4,7 @@ fragment ProductListFragment on Product {
   description
   price
   slug
+  rating
   images(first: 1) {
     url
   }

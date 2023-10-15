@@ -1,5 +1,57 @@
 query ProductsGetList($first: Int!, $skip: Int!) {
-  products(first: $first, skip: $skip){
+  products(first: $first, skip: $skip) {
+    ...ProductListFragment
+  }
+
+  productsConnection {
+    aggregate {
+      count
+    }
+  }
+}
+
+query ProductsGetListPriceDESC($first: Int!, $skip: Int!) {
+  products(
+    orderBy: price_DESC
+    first: $first
+    skip: $skip
+  ) {
+    ...ProductListFragment
+  }
+
+  productsConnection {
+    aggregate {
+      count
+    }
+  }
+}
+
+query ProductsGetListPriceASC($first: Int!, $skip: Int!) {
+  products(orderBy: price_ASC, first: $first, skip: $skip) {
+    ...ProductListFragment
+  }
+
+  productsConnection {
+    aggregate {
+      count
+    }
+  }
+}
+
+query ProductsGetListRatingDESC($first: Int!, $skip: Int!) {
+  products(orderBy: rating_DESC, first: $first, skip: $skip) {
+    ...ProductListFragment
+  }
+
+  productsConnection {
+    aggregate {
+      count
+    }
+  }
+}
+
+query ProductsGetListRatingASC($first: Int!, $skip: Int!) {
+  products(orderBy: rating_ASC, first: $first, skip: $skip) {
     ...ProductListFragment
   }
 

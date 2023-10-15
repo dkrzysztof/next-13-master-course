@@ -1,11 +1,19 @@
 import { notFound } from "next/navigation";
 import { executeQraphql, paginationToFirstSkip } from ".";
 import {
+  Exact,
   ProductGetByIdDocument,
   ProductSearchListDocument,
+  ProductUpdateAverageRatingDocument,
   ProductVariantsListDocument,
   ProductsGetByCategorySlugDocument,
   ProductsGetListDocument,
+  ProductsGetListPriceAscDocument,
+  ProductsGetListPriceDescDocument,
+  ProductsGetListQuery,
+  ProductsGetListRatingAscDocument,
+  ProductsGetListRatingDescDocument,
+  TypedDocumentString,
 } from "@/gql/graphql";
 import type {
   ProductBaseVariant,
@@ -14,13 +22,48 @@ import type {
 } from "@/ui/types";
 import { productFragmentToProductItem } from "@/utils";
 
+export type SortingProductsList =
+  | "price-desc"
+  | "price-asc"
+  | "rating-desc"
+  | "rating-asc"
+  | "default";
+
+type ProductsListQuery = TypedDocumentString<
+  ProductsGetListQuery,
+  Exact<{
+    first: number;
+    skip: number;
+  }>
+>;
+
+const orderKeyToSortingQuery: Record<
+  SortingProductsList,
+  ProductsListQuery
+> = {
+  default: ProductsGetListDocument,
+  "price-asc": ProductsGetListPriceAscDocument,
+  "price-desc": ProductsGetListPriceDescDocument,
+  "rating-asc": ProductsGetListRatingAscDocument,
+  "rating-desc": ProductsGetListRatingDescDocument,
+};
+
+const chooseQueryBySorting = (
+  orderBy?: SortingProductsList
+): ProductsListQuery => {
+  return orderKeyToSortingQuery[
+    orderBy || "default"
+  ] as ProductsListQuery;
+};
+
 export const getProductsList = async (
   pageSize: number,
-  pageNumber: number
+  pageNumber: number,
+  orderBy?: SortingProductsList
 ): Promise<ListPagination<ProductItemType>> => {
   const { products: productsRaw, productsConnection } =
     await executeQraphql({
-      query: ProductsGetListDocument,
+      query: chooseQueryBySorting(orderBy),
       variables: paginationToFirstSkip(
         pageNumber,
         pageSize
@@ -45,8 +88,9 @@ export const getProductById = async (
     query: ProductGetByIdDocument,
     variables: {
       id,
-      orderId
+      orderId,
     },
+    cache:"no-cache"
   });
 
   if (!product) {
@@ -63,8 +107,9 @@ export const getProductById = async (
       alt: product.name,
     },
     price: product.price,
+    rating: product.rating,
     description: product.description,
-    orderItem: product.orderItems[0]
+    orderItem: product.orderItems[0],
   };
 };
 
@@ -136,4 +181,28 @@ export const getProductsBySearch = async (
     data: products,
     count: productsConnection.aggregate.count,
   };
+};
+
+export const recalculateProductAverageReview = (
+  productId: string
+) => {
+  return fetch(
+    `http://localhost:3000/api/products/${productId}`,
+    {
+      method: "POST",
+    }
+  );
+};
+
+export const updateProductAverageRating = async (
+  productId: string,
+  avgRating: number
+) => {
+  return executeQraphql({
+    query: ProductUpdateAverageRatingDocument,
+    variables: {
+      productId,
+      avgRating,
+    },
+  });
 };
