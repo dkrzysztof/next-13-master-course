@@ -30,8 +30,11 @@ export const ProductListItemDescription = ({
           {formatMoney(price)}
         </p>
         <p className="flex flex-nowrap text-sm font-medium text-gray-900 text-right align-middle">
-          ({rating?.toFixed(0)}){" "} 
-          <Rating value={rating} readOnly size="small" />
+          (
+          {rating && rating > 0
+            ? rating?.toFixed(1)
+            : rating?.toFixed(0)}
+          ) <Rating value={rating} readOnly size="small" />
         </p>
       </div>
     </div>

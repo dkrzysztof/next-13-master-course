@@ -40,6 +40,7 @@ export default async function Products({
     order
   );
 
+
   // const collections = await getCollectionsList();
 
   return (
@@ -50,7 +51,10 @@ export default async function Products({
       </section> */}
       <section className="mx-auto max-w-2xl px-8 pb-12 sm:px-6 sm:py-16 md:max-w-4xl lg:max-w-7xl">
         <PageHeader title="Our products" name={""} />
-        <ProductsSorter pageNumber={pageNumber} currentSorting={order || ""} />
+        <ProductsSorter
+          pageNumber={pageNumber}
+          currentSorting={order || ""}
+        />
         <ProductList products={products} />
         <PaginationList
           rootPath={`/products` as Route}

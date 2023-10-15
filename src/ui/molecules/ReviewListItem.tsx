@@ -14,7 +14,7 @@ export const ReviewListItem = ({
         <p className="text-slate-600 text-base">{name},</p>
         {rating}/5 <Rating value={+rating} readOnly />
       </div>
-      <h1 className="font-semibold text-xl mb-2">{headline}</h1>
+      <h2 className="font-semibold text-xl mb-2">{headline}</h2>
       <p className="text-gray-700 italic">{content}</p>
     </div>
   );

@@ -68,8 +68,13 @@ export const getProductsList = async (
         pageNumber,
         pageSize
       ),
+      cache:"no-cache"
     });
-
+  console.log(
+    productsRaw.map((x) => ({
+      rating: x.rating,
+    }))
+  );
   const products: ProductItemType[] = productsRaw.map(
     productFragmentToProductItem
   );
@@ -90,7 +95,7 @@ export const getProductById = async (
       id,
       orderId,
     },
-    cache:"no-cache"
+    cache: "no-cache",
   });
 
   if (!product) {
@@ -107,7 +112,7 @@ export const getProductById = async (
       alt: product.name,
     },
     price: product.price,
-    rating: product.rating,
+    rating: product.rating || 0,
     description: product.description,
     orderItem: product.orderItems[0],
   };
@@ -187,7 +192,7 @@ export const recalculateProductAverageReview = (
   productId: string
 ) => {
   return fetch(
-    `http://localhost:3000/api/products/${productId}`,
+    `${process.env.APP_ORIGIN}/api/products/${productId}`,
     {
       method: "POST",
     }

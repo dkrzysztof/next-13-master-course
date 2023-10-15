@@ -5,7 +5,7 @@ export const formatMoney = (amount: number) => {
   return new Intl.NumberFormat("pl-PL", {
     style: "currency",
     currency: "PLN",
-  }).format(amount/100);
+  }).format(amount / 100);
 };
 
 export const getPages = (
@@ -19,12 +19,15 @@ export const getPages = (
   );
 };
 
-export const productFragmentToProductItem = (fragment: ProductListFragmentFragment): ProductItemType => {
+export const productFragmentToProductItem = (
+  fragment: ProductListFragmentFragment
+): ProductItemType => {
   return {
     id: fragment.id,
     name: fragment.name,
     category: fragment.categories[0]?.name || "",
     categorySlug: fragment.slug,
+    rating: fragment.rating || 0,
     coverImage: fragment.images[0] && {
       src: fragment.images[0].url,
       alt: fragment.name,

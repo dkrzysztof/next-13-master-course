@@ -37,7 +37,7 @@ export const ReviewsOrganism = ({
   return (
     <>
       <div className="flex-auto w-1/3">
-        <h1 className="text-bold text-2xl">Ratings</h1>
+        <h2 className="text-bold text-2xl">Ratings</h2>
         <AddReviewForm
           action={async (formData: FormData) => {
             const newReview = formDataToReview(formData);

@@ -14,9 +14,9 @@ export const ReviewList = ({
 
   return (
     <>
-      <h1 className="text-lg text-slate-900 font-bold mb-6">
+      <h2 className="text-lg text-slate-900 font-bold mb-6">
         Customers reviews
-      </h1>
+      </h2>
       {reviews.map((review, index) => (
         <div
           key={index}
