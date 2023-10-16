@@ -8,11 +8,17 @@ import {
   getCartById,
 } from "@/api/carts";
 import { AddToCartButton } from "./AddToCartButton";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidateTag } from "next/cache";
 
 type ProductDescriptionProps = {
   product: ProductItemType;
 };
+const delay = (timeMs: number) =>
+  new Promise<void>((resolve, _) =>
+    setTimeout(() => {
+      resolve();
+    }, timeMs)
+  );
 
 export const ProductDescription = ({
   product: {
@@ -40,6 +46,7 @@ export const ProductDescription = ({
     });
 
     revalidateTag("cart");
+    await delay(100)
   };
 
   return (
