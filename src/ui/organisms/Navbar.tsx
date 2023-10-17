@@ -8,6 +8,10 @@ import { getCartFromCookies } from "@/api/carts";
 export async function Navbar() {
   const categories = await getCategoriesList();
   const cart = await getCartFromCookies();
+  const quantity = await cart?.orderItems.reduce(
+    (acc, order) => acc + order.quantity,
+    0
+  );
 
   const activeLinkProps = {
     className:
@@ -38,7 +42,7 @@ export async function Navbar() {
           <SearchProducts className="ml-auto" />
           <UserCartIcon
             activeLinkProps={activeLinkProps}
-            quantity={cart?.orderItems.length ?? 0}
+            quantity={quantity ?? 0}
           />
         </div>
       </div>
