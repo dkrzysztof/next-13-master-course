@@ -68,8 +68,8 @@ export const handleStripePaymentAction = async () => {
       }))
       .filter(Boolean),
     mode: "payment",
-    success_url: `http://localhost:3000/cart/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `http://localhost:3000/cart/canceled`,
+    success_url: `${process.env.APP_ORIGIN}/cart/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${process.env.APP_ORIGIN}/cart/canceled`,
   });
 
   if (session.url) {
