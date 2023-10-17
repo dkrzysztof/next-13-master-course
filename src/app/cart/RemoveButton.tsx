@@ -15,17 +15,19 @@ export const RemoveButton = ({
   const router = useRouter();
 
   return (
-    <button
-      className="text-red-500"
-      disabled={isPending}
-      formAction={() => {
-        startTransistion(async () => {
-          await removeItem(itemId);
-          router.refresh();
-        });
-      }}
-    >
-      Remove
-    </button>
+    <form>
+      <button
+        className="text-red-500"
+        disabled={isPending}
+        formAction={() => {
+          startTransistion(async () => {
+            await removeItem(itemId);
+            router.refresh();
+          });
+        }}
+      >
+        Remove
+      </button>
+    </form>
   );
 };
